@@ -10,16 +10,11 @@ class AlbumController extends ApiController
 {
     /**
      * @Route("/albums/{token}", name="album_show")
+     * @param Album $album
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show($token)
+    public function show(Album $album)
     {
-        $album = $this->getDoctrine()->getRepository(Album::class)->find($token);
-
-        if (!$album) {
-            return $this->json(['message' => 'Album not found'], Response::HTTP_NOT_FOUND);
-        }
-
         return $this->json($this->serializer->normalize($album, null, ['groups' => ['album']]));
     }
 }

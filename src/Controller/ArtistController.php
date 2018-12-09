@@ -21,16 +21,11 @@ class ArtistController extends ApiController
 
     /**
      * @Route("/artists/{token}", name="artist_show")
+     * @param Artist $artist
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show($token)
+    public function show(Artist $artist)
     {
-        $artist = $this->getDoctrine()->getRepository(Artist::class)->find($token);
-
-        if (!$artist) {
-            return $this->json(['message' => 'Artist not found'], Response::HTTP_NOT_FOUND);
-        }
-
         return $this->json($this->serializer->normalize($artist, null, ['groups' => ['artist']]));
     }
 }
