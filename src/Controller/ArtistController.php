@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArtistController extends ApiController
 {
+    protected $groups = ['artist'];
+
     /**
      * @Route("/artists", name="artist_index")
      * @return \Symfony\Component\HttpFoundation\Response
@@ -16,7 +18,7 @@ class ArtistController extends ApiController
     {
         $artists = $this->getDoctrine()->getRepository(Artist::class)->findAll();
 
-        return $this->json($this->serializer->normalize($artists, null, ['groups' => ['artist']]));
+        return $this->jsonResponse($artists);
     }
 
     /**
@@ -26,6 +28,6 @@ class ArtistController extends ApiController
      */
     public function show(Artist $artist)
     {
-        return $this->json($this->serializer->normalize($artist, null, ['groups' => ['artist']]));
+        return $this->jsonResponse($artist);
     }
 }

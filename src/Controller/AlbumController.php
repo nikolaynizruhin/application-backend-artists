@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AlbumController extends ApiController
 {
+    protected $groups = ['album'];
+
     /**
      * @Route("/albums/{token}", name="album_show")
      * @param Album $album
@@ -15,6 +17,6 @@ class AlbumController extends ApiController
      */
     public function show(Album $album)
     {
-        return $this->json($this->serializer->normalize($album, null, ['groups' => ['album']]));
+        return $this->jsonResponse($album);
     }
 }

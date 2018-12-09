@@ -13,10 +13,16 @@ use Symfony\Component\Serializer\Serializer;
 abstract class ApiController extends AbstractController
 {
     protected $serializer;
+    protected $groups;
 
     public function __construct()
     {
         $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
         $this->serializer = new Serializer([new ObjectNormalizer($classMetadataFactory)], [new JsonEncoder]);
+    }
+
+    protected function jsonResponse($data)
+    {
+        return $this->json($this->serializer->normalize($data, null, ['groups' => $this->groups]));
     }
 }
